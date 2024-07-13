@@ -4,43 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library</title>
+    <link rel="stylesheet" href="styles.css">
+
 </head>
 <body>
-    <h1>My Books</h1>
-    <dialog id="form-dialog">
-       <button class="close-dialog">X</button>
-       <h1>Add a new book:</h1>
-       <form>
-            <ul>
-                <li>
-                    <label for="title">Title:</label>
-                    <input type="text" id="title">
-                </li>
-                <li>
-                    <label for="author">Author:</label>
-                    <input type="text" id="author">
-                </li>
-                <li>
-                    <label for="pages">Pages:</label>
-                    <input type="number" id="pages">
-                </li>
-                <li>
-                    <label for="read">Read:</label>
-                    <select id="read">
-                        <option>yes</option>
-                        <option>no</option>
-                    </select>
-                </li>
-            </ul>
-            <button class="confirm-dialog">Confirm</button>
-       </form>
-    </dialog>
+    <div class="header">
+        <h1 class="header-title">My Books</h1>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>notebook-outline</title><path d="M17,4V10L15,8L13,10V4H9V20H19V4H17M3,7V5H5V4C5,2.89 5.9,2 7,2H19C20.05,2 21,2.95 21,4V20C21,21.05 20.05,22 19,22H7C5.95,22 5,21.05 5,20V19H3V17H5V13H3V11H5V7H3M5,5V7H7V5H5M5,19H7V17H5V19M5,13H7V11H5V13Z" /></svg>
+    </div>
 
-    <button class="new-book">NEW BOOK</button>
+    <div class="section"> 
+        <p>To add a new book:</p>
+        <button class="new-book">NEW BOOK</button>
+    </div>
+
+    <dialog id="form-dialog">
+
+       <div class="dialog-container">
+            <div class="form-container">
+                <form>
+                    <ul>
+                        <li>
+                            <label for="title">Title:</label>
+                            <input type="text" id="title" required>
+                        </li>
+                        <li>
+                            <label for="author">Author:</label>
+                            <input type="text" id="author" required> 
+                        </li>
+                        <li>
+                            <label for="pages">Pages:</label>
+                            <input type="number" id="pages" required>
+                        </li>
+                        <li>
+                            <label for="read">Read:</label>
+                            <select id="read">
+                                <option>yes</option>
+                                <option>no</option>
+                            </select>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+
+            <button class="confirm-dialog">Confirm</button>
+            <button class="close-dialog">Cancel</button>
+       </div>       
+    </dialog>
 
     <div class="container">    </div>
 
-    <!-- <button class="display-books">Display All Books</button> -->
 
     <script src="script.js"></script>
 </body>
