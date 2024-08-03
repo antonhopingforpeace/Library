@@ -1,19 +1,37 @@
 const myLibrary = [];
 let container = document.querySelector(".container");
 
-function Book(title, author, pages, read){
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-}
+// function Book(title, author, pages, read){
+//     this.title = title;
+//     this.author = author;
+//     this.pages = pages;
+//     this.read = read;
+// }
 
-Book.prototype.info = function(){
-    if(this.read === "no"){
-        return this.title + " by " + this.author + ", " + this.pages + " pages, not read yet";
+// Book.prototype.info = function(){
+//     if(this.read === "no"){
+//         return this.title + " by " + this.author + ", " + this.pages + " pages, not read yet";
+//     }
+//     else{
+//         return this.title + " by " + this.author + ", " + this.pages + " pages, has been read ";
+//     }
+// }
+
+class Book{
+    constructor(title,author,pages,read){
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
     }
-    else{
-        return this.title + " by " + this.author + ", " + this.pages + " pages, has been read ";
+
+    info(){
+        if(this.read === "no"){
+            return this.title + " by " + this.author + ", " + this.pages + " pages, not read yet";
+        }
+        else{
+            return this.title + " by " + this.author + ", " + this.pages + " pages, has been read ";
+        }
     }
 }
 
@@ -46,8 +64,7 @@ confirmDialogButton.addEventListener("click", (event)=>{
     let newBook = new Book(bookTitle,bookAuthor,bookPages,bookRead);
     addBookToLibrary(newBook);
     form.reset();
-    dialog.close();
-    
+    dialog.close();  
 })
 
 function displayBooksInLibrary(){
