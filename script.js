@@ -28,6 +28,12 @@ const showDialogButton = document.querySelector(".new-book");
 const closeDialogButton = document.querySelector(".close-dialog");
 const confirmDialogButton = document.querySelector(".confirm-dialog");
 
+const bookTitle = document.querySelector("form #title");
+const bookAuthor = document.querySelector("form #author");
+const bookPages = document.querySelector("form #pages");
+const bookRead = document.querySelector("form #read");
+
+
 showDialogButton.addEventListener("click", ()=>{
     dialog.showModal();
 })
@@ -37,17 +43,51 @@ closeDialogButton.addEventListener("click", ()=>{
 })
 
 confirmDialogButton.addEventListener("click", (event)=>{
-    event.preventDefault();
+
     const form = document.querySelector("form");
-    const bookTitle = document.querySelector("form #title").value;
-    const bookAuthor = document.querySelector("form #author").value;
-    const bookPages = document.querySelector("form #pages").value;
-    const bookRead = document.querySelector("form #read").value;
-    let newBook = new Book(bookTitle,bookAuthor,bookPages,bookRead);
+
+    //With this i can check validity!!!
+    if (!form.checkValidity()) {
+
+        if (bookTitle.validity.tooShort) {
+            bookTitle.setCustomValidity("I am expecting a Title at least three letters long!");
+        }
+        else if(bookTitle.validity.valueMissing){
+            bookTitle.setCustomValidity("I am expecting a Title!");
+        }
+        else{
+            bookTitle.setCustomValidity("");
+        }
+
+        if (bookAuthor.validity.tooShort) {
+            bookAuthor.setCustomValidity("I am expecting an Authors name at least three letters long!");
+        }
+        else if(bookAuthor.validity.valueMissing){
+            bookAuthor.setCustomValidity("I am expecting an Authors name!");
+        }
+        else{
+            bookAuthor.setCustomValidity("");
+        }
+
+        if (bookPages.validity.rangeUnderflow) {
+            bookPages.setCustomValidity("I am expecting a book that has more than 5 pages");
+        }
+        else if(bookPages.validity.valueMissing){
+            bookPages.setCustomValidity("I am expecting the books length in pages!");
+        }
+        else{
+            bookPages.setCustomValidity("");
+        }
+
+        form.reportValidity();
+        return;
+    }
+    
+
+    let newBook = new Book(bookTitle.value,bookAuthor.value,bookPages.value,bookRead.value);
     addBookToLibrary(newBook);
     form.reset();
     dialog.close();
-    
 })
 
 function displayBooksInLibrary(){
