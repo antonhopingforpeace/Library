@@ -1,25 +1,27 @@
 const myLibrary = [];
 let container = document.querySelector(".container");
 
-function Book(title, author, pages, read){
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-}
-
-Book.prototype.info = function(){
-    if(this.read === "no"){
-        return this.title + " by " + this.author + ", " + this.pages + " pages, not read yet";
+class Book{
+    constructor(title, author, pages, read){
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
     }
-    else{
-        return this.title + " by " + this.author + ", " + this.pages + " pages, has been read ";
+    info(){
+        if(this.read === "no"){
+            return this.title + " by " + this.author + ", " + this.pages + " pages, not read yet";
+        }
+        else{
+            return this.title + " by " + this.author + ", " + this.pages + " pages, has been read ";
+        }
     }
 }
 
 function addBookToLibrary(book){
     myLibrary.push(book);
     container.innerHTML="";
+    storeInLocalStorage();
     displayBooksInLibrary();
 }
 
@@ -128,3 +130,54 @@ function displayBooksInLibrary(){
         container.appendChild(placementOfBook);
     }
 }
+
+function storageAvailable(type) {
+    let storage;
+    try {
+      storage = window[type];
+      const x = "__storage_test__";
+      storage.setItem(x, x);
+      storage.removeItem(x);
+      return true;
+    } 
+    catch (e) {
+        return (
+            e instanceof DOMException &&
+            e.name === "QuotaExceededError" &&
+            // acknowledge QuotaExceededError only if there's something already stored
+            storage &&
+            storage.length !== 0
+        );
+    }
+}
+
+function storeInLocalStorage() {
+    const libraryArray = [];
+  
+    myLibrary.forEach((element) => {
+      libraryArray.push(element);
+    });
+  
+    let libraryArrayString = JSON.stringify(libraryArray);
+    localStorage.setItem("__libraryArray", libraryArrayString);
+}
+
+function loadDataOfLocalStorage() {
+    const savedLibrary = JSON.parse(localStorage.getItem("__libraryArray"));
+  
+    savedLibrary.forEach((book, index) => {
+      let title = book.title;
+      let author = book.author;
+      let pages = book.pages;
+      let read = book.read;
+  
+      myLibrary.push(new Book(title,author,pages,read));
+    });
+}
+
+if (storageAvailable("localStorage")) {
+    if (localStorage.getItem("__libraryArray")){
+      loadDataOfLocalStorage();
+      displayBooksInLibrary()
+    }     
+} 
